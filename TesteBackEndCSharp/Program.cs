@@ -1,6 +1,12 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.EntityFrameworkCore;
+using TesteBackEndCSharp.Context;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var conexao = builder.Configuration.GetConnectionString("ApiConnection");
+builder.Services.AddDbContext<DataContext>(options =>
+                options.UseSqlite(conexao));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
