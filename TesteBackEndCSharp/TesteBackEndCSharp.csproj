@@ -26,11 +26,15 @@
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Controllers\" />
     <None Remove="Service\" />
+    <None Remove="Dados\" />
+    <None Remove="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Service\" />
+    <Folder Include="Dados\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
 </Project>
