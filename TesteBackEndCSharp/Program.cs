@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var conexao = builder.Configuration.GetConnectionString("ApiConnection");
 builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlite(conexao));
-
+builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
