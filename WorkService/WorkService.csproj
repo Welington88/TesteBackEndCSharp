@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UserSecretsId>dotnet-WorkService-A700652B-F156-48BD-9989-C413E10BD255</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="CsvHelper" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TesteBackEndCSharp\TesteBackEndCSharp.csproj" />
+  </ItemGroup>
+</Project>

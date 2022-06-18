@@ -6,6 +6,7 @@ namespace TesteBackEndCSharp.Models
         public String? ID_MOEDA { get; set; }
 
         public DateTime DATA_REF { get; set; }
+
     }
 }
 

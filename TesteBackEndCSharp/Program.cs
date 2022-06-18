@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TesteBackEndCSharp.Context;
+using TesteBackEndCSharp.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 var conexao = builder.Configuration.GetConnectionString("ApiConnection");
 builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlite(conexao));
-builder.Services.AddMemoryCache();
+
+builder.Services.AddScoped<IMoneyService, MoneyService>();
+builder.Services.AddTransient<IMoneyService, MoneyService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

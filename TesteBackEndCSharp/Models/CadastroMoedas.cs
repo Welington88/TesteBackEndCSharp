@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace TesteBackEndCSharp.Models
 {
@@ -13,13 +14,36 @@ namespace TesteBackEndCSharp.Models
 
         public CadastroMoedas(String Moeda, int Codigo)
         {
-            this.Moeda = Moeda;
+            this.Moeda = Moeda.Trim();
             this.Codigo = Codigo;
         }
+
         public String? Moeda { get; set; }
+
         public int Codigo { get; set; }
 
         public List<CadastroMoedas> listaMoedas { get; set; }
+
+        public CadastroMoedas getListaMoedas(string moeda) {
+
+            var cadastroMoeda = getListaMoedas().Where(m => m.Moeda == moeda).FirstOrDefault();
+            if (cadastroMoeda is null)
+            {
+                throw new Exception("Moeda não encontrada");
+            }
+            return cadastroMoeda;
+        }
+
+        public CadastroMoedas getListaMoedas(int codigo)
+        {
+
+            var cadastroMoeda = getListaMoedas().Where(m => m.Codigo == codigo).FirstOrDefault();
+            if (cadastroMoeda is null)
+            {
+                throw new Exception("Moeda não encontrada");
+            }
+            return cadastroMoeda;
+        }
 
         public List<CadastroMoedas> getListaMoedas()
         {
@@ -96,7 +120,7 @@ namespace TesteBackEndCSharp.Models
                 new CadastroMoedas("ZWL ",31)
             };
 
-            return lista;
+            return lista.ToList();
         }
     }
 }

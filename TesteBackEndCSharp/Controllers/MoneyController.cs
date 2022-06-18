@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TesteBackEndCSharp.Context;
 using TesteBackEndCSharp.Models;
+using TesteBackEndCSharp.Service;
 
 namespace TesteBackEndCSharp.Controllers
 {
@@ -13,23 +13,25 @@ namespace TesteBackEndCSharp.Controllers
     public class MoneyController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly MoneyService _service;
 
         public MoneyController(DataContext context)
         {
             _context = context;
+            _service = new MoneyService(_context);
         }
 
         // GET: api/Money
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Money>>> GetMoney()
+        public async Task<ActionResult<IEnumerable<Money>>> GetItemFila()
         {
             if (_context.Money == null)
             {
                 return NotFound();
             }
-            var id = _context.Money.Max<Money>(m => m.id);
-            return await _context.Money.Where(m => m.id == id).ToListAsync();
+
+            return await _service.GetItemFila();
         }
 
         // POST: api/Money
@@ -37,19 +39,17 @@ namespace TesteBackEndCSharp.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Money>>> AddItemFila(List<Money> money)
         {
-          if (_context.Money == null)
-          {
-              return Problem("Entity set 'DataContext.Money'  is null.");
-          }
 
-            foreach (var m in money)
+            var result = await _service.AddItemFila(money);
+
+            if (result)
             {
-                _context.Money.Add(m);
+                return CreatedAtAction("GetItemFila", new { id = money.ToList().FirstOrDefault() }, money);
             }
-
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMoney", new { id = money.ToList().FirstOrDefault() }, money);
+            else
+            {
+                return Problem("Entity set 'DataContext.Money'  is null.");
+            }     
         }
     }
 }

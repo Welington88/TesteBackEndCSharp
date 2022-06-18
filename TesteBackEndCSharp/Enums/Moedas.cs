@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-namespace TesteBackEndCSharp.Enums
+﻿namespace TesteBackEndCSharp.Enums
 {
 	public enum CodigosMoedas
 	{
