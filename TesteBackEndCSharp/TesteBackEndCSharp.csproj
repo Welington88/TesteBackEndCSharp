@@ -41,4 +41,7 @@
     <Folder Include="Enums\" />
     <Folder Include="Exports\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Exports\MassaDados.json" />
+  </ItemGroup>
 </Project>
