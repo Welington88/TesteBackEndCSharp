@@ -29,7 +29,12 @@ namespace TesteBackEndCSharp.Service
         /// <returns></returns>
         public async Task<List<Money>> GetItemFila()
         {
-            var id = _context.Money.Max<Money>(m => m.id);
+            var lista = _context.Money.ToList();
+            if (lista.Count() == 0)
+            {
+                throw new Exception("Não possui filas de consulta a serem processadas....");
+            }
+            var id  = _context.Money.Max<Money>(m => m.id);
             var resultado = await _context.Money.Where(m => m.id == id).ToListAsync();
 
             var money = await _context.Money.FindAsync(id);

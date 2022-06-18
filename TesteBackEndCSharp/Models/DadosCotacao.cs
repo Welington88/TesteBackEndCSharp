@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace TesteBackEndCSharp.Models
 {
+    [NotMapped]
     public class DadosCotacao
     {
         

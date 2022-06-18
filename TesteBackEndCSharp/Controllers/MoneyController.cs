@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using TesteBackEndCSharp.Context;
 using TesteBackEndCSharp.Models;
 using TesteBackEndCSharp.Service;
@@ -22,21 +23,37 @@ namespace TesteBackEndCSharp.Controllers
         }
 
         // GET: api/Money
-        
         [HttpGet]
+        [SwaggerOperation(Summary = "", Description = "")]
+        [SwaggerResponse(200, @"Consulta realizada com Sucesso.")]
+        [SwaggerResponse(400, @"Não existem Fila a Serem processado.")]
+        [SwaggerResponse(500, @"Erro servidor indisponível.")]
         public async Task<ActionResult<IEnumerable<Money>>> GetItemFila()
         {
-            if (_context.Money == null)
+            try
             {
-                return NotFound();
+                if (_context.Money == null)
+                {
+                    return NotFound();
+                }
+                var retorno = await _service.GetItemFila();
+
+                return retorno;
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest("Não possui filas de consulta a serem processadas....");
             }
 
-            return await _service.GetItemFila();
+            
         }
 
         // POST: api/Money
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [SwaggerResponse(200, @"Dados da consulta salvo Sucesso.")]
+        [SwaggerResponse(400, @"Erro ao processar a solicitação.")]
+        [SwaggerResponse(500, @"Erro servidor indisponível.")]
         public async Task<ActionResult<List<Money>>> AddItemFila(List<Money> money)
         {
 
